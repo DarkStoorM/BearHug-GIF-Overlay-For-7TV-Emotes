@@ -1,0 +1,20 @@
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 16pt;
+  -webkit-text-size-adjust: 16pt;
+  font-family: "Mukta", sans-serif;
+}
+
+body {
+  align-items: center;
+  background-color: #3b3939;
+  color: #908585;
+  display: flex;
+  justify-content: center;
+  margin: 5rem 0 0 0;
+}
