@@ -28,19 +28,17 @@ export class DropZone {
    * Executes the processing logic on the dropped file or data, blocking the drop functionality until the processing is
    * done.
    */
-  private async onDragDrop(e: DragEvent): Promise<void> {
+  private onDragDrop(e: DragEvent): void {
     e.preventDefault();
+
     if (this.isCurrentlyProcessing) {
       return;
     }
 
     // We don't need this overlay state anymore, switch it to another one and start the data processor
-    await this.overlaySwap(
-      EOverlayState.OVERLAY_READY_FOR_PROCESSING,
-      EOverlayState.OVERLAY_WORKING
-    );
+    this.overlaySwap(EOverlayState.OVERLAY_READY_FOR_PROCESSING, EOverlayState.OVERLAY_WORKING);
 
-    await this.processorStart();
+    this.processorStart();
   }
 
   /**
@@ -92,7 +90,7 @@ export class DropZone {
    * @param   {EOverlayState}  currentState  CSS class to replace
    * @param   {EOverlayState}  newState      CSS class to swap the current one with
    */
-  private async overlaySwap(currentState: EOverlayState, newState: EOverlayState): Promise<void> {
+  private overlaySwap(currentState: EOverlayState, newState: EOverlayState): void {
     this.dropZone.classList.replace(`drop-zone--${currentState}`, `drop-zone--${newState}`);
   }
 
@@ -100,6 +98,8 @@ export class DropZone {
    * Image processing logic
    */
   private processImage(): void {
+    // TODO: Add Image Processor here
+
     this.processorFinish();
   }
 
@@ -116,13 +116,9 @@ export class DropZone {
    * Disables the dropping functionality in case the user tries dropping something while the processor is still
    * running
    */
-  private async processorStart(): Promise<void> {
+  private processorStart(): void {
     this.isCurrentlyProcessing = true;
 
-    for (let x = 0; x < 1000000; x++) {
-      console.log(Math.pow(2, 2));
-    }
-    console.log("stop");
     this.processImage();
   }
 
