@@ -1,10 +1,14 @@
 export class ImageProcessor {
   private supportedTypes = new Set<string>(["image/png", "image/jpeg", "image/webp"]);
+  private fileReader = new FileReader();
 
   public constructor(private droppedFile: File) {
     if (!this.isImage()) {
       throw new Error(`Selected file type is not supported`);
     }
+
+    // Register the reader event immediately
+    this.fileReader.addEventListener("load", this.processImage.bind(this));
   }
 
   /**
@@ -12,8 +16,14 @@ export class ImageProcessor {
    * returns the data URI as a result.
    */
   public bearHug(): string {
-    // TODO
+    this.fileReader.readAsDataURL(this.droppedFile);
+
     return "";
+  }
+
+  private processImage(): void {
+    // The image data is now available in the `result` property of the `reader` object
+    const imageData = this.fileReader.result as string;
   }
 
   /**
