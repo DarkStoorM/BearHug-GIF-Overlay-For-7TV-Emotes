@@ -1,3 +1,4 @@
+import { ImageProcessor } from "./ImageProcessor";
 import { EComponentIDs } from "./types/Enums/EComponentIDs";
 import { EOverlayState } from "./types/Enums/EOverlayState";
 
@@ -38,7 +39,7 @@ export class DropZone {
     // We don't need this overlay state anymore, switch it to another one and start the data processor
     this.overlaySwap(EOverlayState.OVERLAY_READY_FOR_PROCESSING, EOverlayState.OVERLAY_WORKING);
 
-    this.processorStart();
+    this.processorStart(e);
   }
 
   /**
@@ -95,15 +96,6 @@ export class DropZone {
   }
 
   /**
-   * Image processing logic
-   */
-  private processImage(): void {
-    // TODO: Add Image Processor here
-
-    this.processorFinish();
-  }
-
-  /**
    * Reenables the dropping functionality after the image processor is done
    */
   private processorFinish(): void {
@@ -116,10 +108,27 @@ export class DropZone {
    * Disables the dropping functionality in case the user tries dropping something while the processor is still
    * running
    */
-  private processorStart(): void {
+  private processorStart(e: DragEvent): void {
     this.isCurrentlyProcessing = true;
 
-    this.processImage();
+    const data = e.dataTransfer;
+
+    if (!data) {
+      // TODO: check if this is really needed
+      throw new Error(`Err`);
+    }
+
+    try {
+      // Only pick the first file in case the user drops multiples
+      // at least for now
+      const resultImage = new ImageProcessor(e.dataTransfer.files[0]).bearHug();
+    } catch (error: unknown) {
+      // TODO: throw this as a UI error later
+      console.error(error);
+      throw new Error();
+    }
+
+    this.processorFinish();
   }
 
   private registerListeners(): void {
