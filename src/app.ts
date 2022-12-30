@@ -1,3 +1,3 @@
 import { DropZone } from "./DropZone";
 
-new DropZone();
+export const dropZone = new DropZone();
