@@ -1,8 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
 
-@import "mixins";
+@import 'mixins';
 
-@import "bem/main";
+@import 'bem/main';
 
-@import "bem/main-container";
-@import "bem/drop-zone";
+@import 'bem/main-container';
+@import 'bem/drop-zone';
+@import 'bem/result-image';
