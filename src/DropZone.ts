@@ -6,23 +6,31 @@ export class DropZone {
   private dropZone: HTMLDivElement;
   private isCurrentlyProcessing = false;
   private main: HTMLDivElement;
+  private resultImageElement: HTMLImageElement;
 
   public constructor() {
-    const element = document.getElementById(EComponentIDs.DROP_ZONE);
-    const main = document.getElementById(EComponentIDs.MAIN_CONTAINER);
-
-    // This entire check/reassign could be replaced with an "as HTMLDivElement" cast, but just in case it's better
-    // to check it anyway
-    for (const el in [element, main]) {
-      if (!el) {
-        throw new Error(`${EComponentIDs.DROP_ZONE} was not found on the page.`);
-      }
-    }
-
-    this.dropZone = element as HTMLDivElement;
-    this.main = main as HTMLDivElement;
+    // Fetch the required elements
+    // No need to check them, because they exist in the DOM anyway ¯\_(ツ)_/¯
+    this.dropZone = document.getElementById(EComponentIDs.DROP_ZONE) as HTMLDivElement;
+    this.main = document.getElementById(EComponentIDs.MAIN_CONTAINER) as HTMLDivElement;
+    this.resultImageElement = document.getElementById(
+      EComponentIDs.RESULT_IMAGE
+    ) as HTMLImageElement;
 
     this.registerListeners();
+  }
+
+  /**
+   * Reenables the dropping functionality after the image processor is done
+   *
+   * @param   {string}  result  Result image that ultimately came back from the `ImageProcessor`
+   */
+  public processorFinish(result: string): void {
+    this.isCurrentlyProcessing = false;
+
+    this.overlayHide(EOverlayState.OVERLAY_WORKING);
+
+    this.resultImageElement.src = result;
   }
 
   /**
@@ -96,15 +104,6 @@ export class DropZone {
   }
 
   /**
-   * Reenables the dropping functionality after the image processor is done
-   */
-  private processorFinish(): void {
-    this.isCurrentlyProcessing = false;
-
-    this.overlayHide(EOverlayState.OVERLAY_WORKING);
-  }
-
-  /**
    * Disables the dropping functionality in case the user tries dropping something while the processor is still
    * running
    */
@@ -119,16 +118,13 @@ export class DropZone {
     }
 
     try {
-      // Only pick the first file in case the user drops multiples
-      // at least for now
-      const resultImage = new ImageProcessor(e.dataTransfer.files[0]).bearHug();
+      // Only pick the first file in case the user drops multiples, at least for now
+      new ImageProcessor(e.dataTransfer.files[0]);
     } catch (error: unknown) {
       // TODO: throw this as a UI error later
       console.error(error);
       throw new Error();
     }
-
-    this.processorFinish();
   }
 
   private registerListeners(): void {
