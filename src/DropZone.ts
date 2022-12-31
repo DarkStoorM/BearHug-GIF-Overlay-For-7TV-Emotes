@@ -45,17 +45,10 @@ export class DropZone {
   }
 
   /**
-   * Enables the dropping functionality
-   */
-  private processorReenableDrop(): void {
-    this.isCurrentlyProcessing = false;
-
-    this.overlayHide(EOverlayState.OVERLAY_WORKING);
-  }
-
-  /**
    * Executes the processing logic on the dropped file or data, blocking the drop functionality
    * until the processing is done.
+   *
+   * @param   {DragEvent}  e  Drag event
    */
   private onDragDrop(e: DragEvent): void {
     e.preventDefault();
@@ -67,6 +60,7 @@ export class DropZone {
     // We don't need this overlay state anymore, switch it to another one and start the data processor
     this.overlaySwap(EOverlayState.OVERLAY_READY_FOR_PROCESSING, EOverlayState.OVERLAY_WORKING);
 
+    // At this point the processor is ready and is not being blocked by the currently running process, so, start
     this.processorStart(e);
   }
 
@@ -109,6 +103,8 @@ export class DropZone {
    * Adds a new state of the given type (applies a new CSS class)
    *
    * @param   {EOverlayState}  stateClass  CSS class to apply
+   *
+   * @see EOverlayState
    */
   private overlayShow(stateClass: EOverlayState): void {
     this.htmlDropZone.classList.add(`drop-zone--${stateClass}`);
@@ -119,14 +115,27 @@ export class DropZone {
    *
    * @param   {EOverlayState}  currentState  CSS class to replace
    * @param   {EOverlayState}  newState      CSS class to swap the current one with
+   *
+   * @see EOverlayState
    */
   private overlaySwap(currentState: EOverlayState, newState: EOverlayState): void {
     this.htmlDropZone.classList.replace(`drop-zone--${currentState}`, `drop-zone--${newState}`);
   }
 
   /**
+   * Enables the dropping functionality
+   */
+  private processorReenableDrop(): void {
+    this.isCurrentlyProcessing = false;
+
+    this.overlayHide(EOverlayState.OVERLAY_WORKING);
+  }
+
+  /**
    * Disables the dropping functionality in case the user tries dropping something while the
    * processor is still running
+   *
+   * @param   {DragEvent}  e  Drag event
    */
   private processorStart(e: DragEvent): void {
     this.isCurrentlyProcessing = true;
@@ -145,14 +154,41 @@ export class DropZone {
       // Immediately allow dropping another image as there was no processing left
       this.processorReenableDrop();
 
+      // Only throw "known" errors here, others will be handled by the global handler
       if (!(error instanceof ErrorMessage)) {
-        return this.triggerErrorMessage(new ErrorMessage("unknownError").message);
+        return;
       }
 
       // "Throw" the error inside the error container in the DOM
       this.triggerErrorMessage(error.message);
-      this.errorsContainer.innerHTML;
     }
+
+    // There are some event that could not be handled by try...catch, some unknown stuff, so just throw them in global
+    // They most likely come from the inside of event listeners
+    window.onerror = (event) => {
+      this.processorReenableDrop();
+      this.triggerErrorMessage(new ErrorMessage("unknownError").message);
+      console.error(event);
+
+      return true;
+    };
+  }
+
+  /**
+   * Registers event listeners on the view elements (body / drop zone)
+   */
+  private registerListeners(): void {
+    // Prevent opening the dragged file as a link in some cases
+    this.htmlBody.addEventListener("dragover", (e) => e.preventDefault());
+    this.htmlDropZone.addEventListener("dragover", (e) => e.preventDefault());
+
+    // When user drags something over (or cancels/leaves), react with modifying the overlay
+    this.htmlBody.addEventListener("dragenter", this.onDragEnter.bind(this));
+    this.htmlDropZone.addEventListener("dragenter", this.onDragEnter.bind(this));
+    this.htmlDropZone.addEventListener("dragleave", this.onDragLeave.bind(this));
+
+    // Handle the file drop
+    this.htmlDropZone.addEventListener("drop", this.onDragDrop.bind(this));
   }
 
   /**
@@ -166,20 +202,7 @@ export class DropZone {
     this.errorsContainer.style.opacity = "1";
     this.errorsContainer.innerText = message;
 
-    Fader.fadeOut(this.errorsContainer, 1000, 3000);
-  }
-
-  private registerListeners(): void {
-    // Prevent opening the dragged file as a link in some cases
-    this.htmlBody.addEventListener("dragover", (e) => e.preventDefault());
-    this.htmlDropZone.addEventListener("dragover", (e) => e.preventDefault());
-
-    // When user drags something over (or cancels/leaves), react with modifying the overlay
-    this.htmlBody.addEventListener("dragenter", this.onDragEnter.bind(this));
-    this.htmlDropZone.addEventListener("dragenter", this.onDragEnter.bind(this));
-    this.htmlDropZone.addEventListener("dragleave", this.onDragLeave.bind(this));
-
-    // Handle the file drop
-    this.htmlDropZone.addEventListener("drop", this.onDragDrop.bind(this));
+    // Execute a FadeOut routine on the errors container element
+    Fader.fadeOut(this.errorsContainer, 1000, 10000);
   }
 }
