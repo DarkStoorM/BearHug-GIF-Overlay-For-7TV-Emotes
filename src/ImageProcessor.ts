@@ -1,6 +1,6 @@
 import GIF = require("gif.js");
 import { dropZone } from "./app";
-import { spritesheetData } from "./helpers";
+import { spritesheetData } from "./helpers/spritesheet";
 import { Numbers } from "./utils/Numbers";
 import { workerString } from "./worker";
 
