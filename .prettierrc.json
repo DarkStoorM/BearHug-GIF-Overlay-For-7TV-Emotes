@@ -11,7 +11,7 @@
     }
   ],
   "parser": "typescript",
-  "printWidth": 100,
+  "printWidth": 120,
   "quoteProps": "as-needed",
   "semi": true,
   "singleQuote": false,
