@@ -10,12 +10,22 @@
 </head>
 
 <body>
-  <div id="container" class="main-container">
-    <div id="drop-zone" class="drop-zone"></div>
-    <div class="main-container__content">
-      <div>
-        <img id="result-image" class="result-image" src="TODO" />
+  <div id="drop-zone" class="drop-zone"></div>
+  <div id="container" class="main">
+    <div class="main__container">
+      <div class="main__container__content">
+        <div class="main__container__content__result">
+          <img id="result-image" src="TODO" />
+        </div>
+        <div class="main__container__content__description">
+          <h2>BearHug image overlay</h2>
+          <h4>Create a new gif for 7TV with a BearHug overlay</h4>
+          <p>Drop an image anywhere and the app will do the rest. For more information refer to the <a
+              href="https://github.com/DarkStoorM/BearHug-GIF-Overlay-For-7TV-Emotes#readme">README</a>. This app is
+            <b>client-side</b>.</p>
+        </div>
       </div>
+      <div id="errors-container" class="main__container__errors"></div>
     </div>
   </div>
   <script src="app.js" defer></script>
