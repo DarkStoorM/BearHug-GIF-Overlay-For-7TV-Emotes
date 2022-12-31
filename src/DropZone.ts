@@ -3,19 +3,27 @@ import { EComponentIDs } from "./types/Enums/EComponentIDs";
 import { EOverlayState } from "./types/Enums/EOverlayState";
 
 export class DropZone {
-  private dropZone: HTMLDivElement;
+  /**
+   * Initial drop zone, which will trigger the page overlay. This part is required as the overlay
+   * is initially disabled and dragging over the body will trigger the
+   */
+  private htmlBody: HTMLBodyElement;
+  /**
+   * Page overlay where users drop the file
+   */
+  private htmlDropZone: HTMLDivElement;
+  /**
+   * Used to display the results from ImageProcessor
+   */
+  private htmlResultImage: HTMLImageElement;
   private isCurrentlyProcessing = false;
-  private main: HTMLDivElement;
-  private resultImageElement: HTMLImageElement;
 
   public constructor() {
     // Fetch the required elements
     // No need to check them, because they exist in the DOM anyway ¯\_(ツ)_/¯
-    this.dropZone = document.getElementById(EComponentIDs.DROP_ZONE) as HTMLDivElement;
-    this.main = document.getElementById(EComponentIDs.MAIN_CONTAINER) as HTMLDivElement;
-    this.resultImageElement = document.getElementById(
-      EComponentIDs.RESULT_IMAGE
-    ) as HTMLImageElement;
+    this.htmlDropZone = document.getElementById(EComponentIDs.DROP_ZONE) as HTMLDivElement;
+    this.htmlResultImage = document.getElementById(EComponentIDs.RESULT_IMAGE) as HTMLImageElement;
+    this.htmlBody = document.getElementsByTagName("body")[0] as HTMLBodyElement;
 
     this.registerListeners();
   }
@@ -30,12 +38,12 @@ export class DropZone {
 
     this.overlayHide(EOverlayState.OVERLAY_WORKING);
 
-    this.resultImageElement.src = result;
+    this.htmlResultImage.src = result;
   }
 
   /**
-   * Executes the processing logic on the dropped file or data, blocking the drop functionality until the processing is
-   * done.
+   * Executes the processing logic on the dropped file or data, blocking the drop functionality
+   * until the processing is done.
    */
   private onDragDrop(e: DragEvent): void {
     e.preventDefault();
@@ -51,8 +59,9 @@ export class DropZone {
   }
 
   /**
-   * When the user drags a file (or anything) into the drop zone, will change the overlay indicating, that he is able
-   * to drop something into this area, which will then process the given data
+   * When the user drags a file (or anything) into the drop zone, will change the overlay
+   * indicating, that he is able to drop something into this area, which will then process the
+   * given data
    */
   private onDragEnter(): void {
     if (this.isCurrentlyProcessing) {
@@ -64,8 +73,8 @@ export class DropZone {
   }
 
   /**
-   * When the user drags a file (or anything) out of the window or cancels with Escape, reverts the overlay back,
-   * indicating, that the drop zone is ready again
+   * When the user drags a file (or anything) out of the window or cancels with Escape, reverts the
+   * overlay back, indicating, that the drop zone is ready again
    */
   private onDragLeave(): void {
     if (this.isCurrentlyProcessing) {
@@ -81,7 +90,7 @@ export class DropZone {
    * @param   {EOverlayState}  stateClass  CSS class to remove from the drop zone
    */
   private overlayHide(stateClass: EOverlayState): void {
-    this.dropZone.classList.remove(`drop-zone--${stateClass}`);
+    this.htmlDropZone.classList.remove(`drop-zone--${stateClass}`);
   }
 
   /**
@@ -90,7 +99,7 @@ export class DropZone {
    * @param   {EOverlayState}  stateClass  CSS class to apply
    */
   private overlayShow(stateClass: EOverlayState): void {
-    this.dropZone.classList.add(`drop-zone--${stateClass}`);
+    this.htmlDropZone.classList.add(`drop-zone--${stateClass}`);
   }
 
   /**
@@ -100,12 +109,12 @@ export class DropZone {
    * @param   {EOverlayState}  newState      CSS class to swap the current one with
    */
   private overlaySwap(currentState: EOverlayState, newState: EOverlayState): void {
-    this.dropZone.classList.replace(`drop-zone--${currentState}`, `drop-zone--${newState}`);
+    this.htmlDropZone.classList.replace(`drop-zone--${currentState}`, `drop-zone--${newState}`);
   }
 
   /**
-   * Disables the dropping functionality in case the user tries dropping something while the processor is still
-   * running
+   * Disables the dropping functionality in case the user tries dropping something while the
+   * processor is still running
    */
   private processorStart(e: DragEvent): void {
     this.isCurrentlyProcessing = true;
@@ -129,13 +138,15 @@ export class DropZone {
 
   private registerListeners(): void {
     // Prevent opening the dragged file as a link in some cases
-    this.main.addEventListener("dragover", (e) => e.preventDefault());
+    this.htmlBody.addEventListener("dragover", (e) => e.preventDefault());
+    this.htmlDropZone.addEventListener("dragover", (e) => e.preventDefault());
 
     // When user drags something over (or cancels/leaves), react with modifying the overlay
-    this.main.addEventListener("dragenter", this.onDragEnter.bind(this));
-    this.main.addEventListener("dragleave", this.onDragLeave.bind(this));
+    this.htmlBody.addEventListener("dragenter", this.onDragEnter.bind(this));
+    this.htmlDropZone.addEventListener("dragenter", this.onDragEnter.bind(this));
+    this.htmlDropZone.addEventListener("dragleave", this.onDragLeave.bind(this));
 
     // Handle the file drop
-    this.main.addEventListener("drop", this.onDragDrop.bind(this));
+    this.htmlDropZone.addEventListener("drop", this.onDragDrop.bind(this));
   }
 }
