@@ -1,6 +1,6 @@
 {
   "name": "bearhug",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
     "coverage-ff": "start firefox \"%cd%\\coverage\\index.html\"",
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DarkStoorM/BearHug.git"
+    "url": "git+https://github.com/DarkStoorM/BearHug-GIF-Overlay-For-7TV-Emotes.git"
   },
   "keywords": [],
   "author": "DarkStoorM",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DarkStoorM/BearHug/issues"
+    "url": "https://github.com/DarkStoorM/BearHug-GIF-Overlay-For-7TV-Emotes/issues"
   },
-  "homepage": "https://github.com/DarkStoorM/BearHug#readme",
+  "homepage": "https://github.com/DarkStoorM/BearHug-GIF-Overlay-For-7TV-Emotes#readme",
   "dependencies": {
     "canvas": "^2.8.0",
     "gif.js": "^0.2.0"
