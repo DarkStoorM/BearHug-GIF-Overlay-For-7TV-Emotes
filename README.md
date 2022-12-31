@@ -3,11 +3,28 @@
 A quick client-side app that takes a dropped image and adds a BearHug-gif overlay.
 
 - [BearHug image overlay](#bearhug-image-overlay)
+  - [Running](#running)
   - [Supported types](#supported-types)
     - [Notice on GIFs](#notice-on-gifs)
   - [Guidelines](#guidelines)
   - [How does it work](#how-does-it-work)
   - [Known issues](#known-issues)
+
+---
+
+## Running
+
+The fastest way, grab the [latest release](https://github.com/DarkStoorM/BearHug-GIF-Overlay-For-7TV-Emotes/releases)
+
+or play with the source
+
+```bash
+npm i
+
+// and
+
+npm start
+```
 
 ---
 
