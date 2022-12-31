@@ -1,9 +1,37 @@
-.main-container {
-  background-color: #635d5d;
-  color: #c0c0c0;
-  padding: 2rem;
-  width: 40rem;
+.main {
+  width: 100%;
+  max-width: $container-main-size;
 
-  &__content {
+  &__container {
+    color: #c0c0c0;
+
+    &__content {
+      background-color: $container-background;
+      display: flex;
+      padding: $container-padding;
+
+      &__result {
+        & > img {
+          height: 128px;
+          width: 128px;
+        }
+      }
+
+      &__description {
+        padding-left: $container-padding;
+      }
+    }
+
+    &__errors {
+      background-color: $container-background;
+      color: #ff4b33;
+      display: none;
+      // Same can be used to push the errors container down to match the padding
+      margin-top: $container-padding;
+      filter: 'alpha(opacity=0)';
+      opacity: 0;
+      padding: $container-padding;
+      width: 100%;
+    }
   }
 }
