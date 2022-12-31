@@ -1,7 +1,7 @@
 /**
  * Provides basic utilities for manipulating numbers
  */
-export class Numbers {
+export abstract class Numbers {
   /**
    * Clamps the input number between <min, max>
    *
