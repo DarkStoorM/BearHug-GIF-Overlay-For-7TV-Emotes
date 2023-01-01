@@ -69,7 +69,7 @@ When the input image is using transparency, the `GIF` instance requires providin
 
 A small workaround has been implemented, that fills the image with a different color and then removes it, to reduce the possibility of color collision by setting transparent pixels to `#000033` color, keeping the outlines or any black pixels.
 
-Unfortunately, again, this will create a very dark-blue border around the pixels which is not a big deal with the small emote size in the Twitch chat.
+Unfortunately, again, this will create a very dark-blue border around the pixels, which should not be a big deal with the small emote size in the Twitch chat.
 
 - Unfortunately, on some **rare** occasion, there will be a one-frame solid background, which can't be helped, although, it sometimes gets fixed when retried with the same image
 
