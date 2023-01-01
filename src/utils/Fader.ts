@@ -1,7 +1,7 @@
 // NOTICE: since there is only one fadable element, there is no need to make this generic for other elements
 class FaderUtil {
-  public declare timeout: NodeJS.Timeout;
   public declare interval: NodeJS.Timer;
+  public declare timeout: NodeJS.Timeout;
 
   /**
    * Clears internal timers (aborts) in case they have to be removed immediately
