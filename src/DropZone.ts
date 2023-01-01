@@ -157,6 +157,9 @@ export class DropZone {
 
       // Execute the image processing - this will call the Drop Zone when finished
       new ImageProcessor(file);
+
+      // At this point, if there were any previously shown errors, just delete them
+      this.triggerErrorMessageClear();
     } catch (error: unknown) {
       // Immediately allow dropping another image as there was no processing left
       this.processorReenableDrop();
@@ -215,5 +218,16 @@ export class DropZone {
 
     // Execute a FadeOut routine on the errors container element
     Fader.fadeOut(this.errorsContainer, 1000, 10000);
+  }
+
+  /**
+   * Immediately removes the error message from the DOM, if any
+   */
+  private triggerErrorMessageClear(): void {
+    Fader.clearInternals();
+
+    this.errorsContainer.style.display = "none";
+    this.errorsContainer.style.opacity = "0";
+    this.errorsContainer.innerText = "";
   }
 }

@@ -4,6 +4,14 @@ class FaderUtil {
   public declare interval: NodeJS.Timer;
 
   /**
+   * Clears internal timers (aborts) in case they have to be removed immediately
+   */
+  public clearInternals(): void {
+    window.clearTimeout(this.timeout);
+    window.clearInterval(this.interval);
+  }
+
+  /**
    * Fades the given element out in [x] milliseconds
    *
    * @param   {HTMLElement}  element       Element to fade out
@@ -12,8 +20,7 @@ class FaderUtil {
    */
   public fadeOut(element: HTMLElement, duration: number, initialDelay: number): void {
     // Clear both to "restart" the fade
-    window.clearTimeout(this.timeout);
-    window.clearInterval(this.interval);
+    this.clearInternals();
 
     this.timeout = setTimeout(() => {
       // initial opacity
