@@ -53,7 +53,7 @@ This size has been chosen to match 7TV's highest image resolution. Let it handle
 
 ## How does it work
 
-After dropping an image, a new GIF is created by drawing the input as static in the animation for 8 frames(1), then re-drawing that image with fine-tuned offset to make it move along with the Bear overlay, as seen in the following example:
+After dropping an image, a new GIF is created by drawing the input as static in the animation for 8 frames(1), then re-drawing that image with fine-tuned offset to make it move along with the Bear overlay, as seen in the following example (click or open in new tab):
 
 ![img](https://user-images.githubusercontent.com/7021295/210149949-c311c659-bc11-4ad8-a7a0-a7395d3b4382.gif)
 
