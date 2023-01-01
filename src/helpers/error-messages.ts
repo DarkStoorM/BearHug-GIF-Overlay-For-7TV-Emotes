@@ -12,5 +12,5 @@ export class ErrorMessage extends Error {
 const ErrorMessages = {
   unsupportedType: "Only GIF, PNG, JPEG, and WEBP file types are supported.",
   unknownError:
-    "Selected file is invalid. Drop a local file or drag it from another tab. If you believe this is an error, open a new Issue in the repo.",
+    "Selected file is invalid. Drop a local file or drag it from another tab (doesn't always work on cross-browser drop or with WebPs). If you believe this is an error, open a new Issue in the repo.",
 };
