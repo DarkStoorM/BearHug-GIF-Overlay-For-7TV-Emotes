@@ -3,6 +3,7 @@ import { ErrorMessage } from "./helpers/error-messages";
 import { EComponentIDs } from "./types/Enums/EComponentIDs";
 import { EOverlayState } from "./types/Enums/EOverlayState";
 import { Fader } from "./utils/Fader";
+import { FileHandler } from "./utils/FileHandler";
 
 export class DropZone {
   private errorsContainer: HTMLDivElement;
@@ -148,18 +149,32 @@ export class DropZone {
     }
 
     try {
-      // Only pick the first file in case the user drops multiples, at least for now
-      new ImageProcessor(e.dataTransfer.files[0]);
+      // Only pick the first file in case the user drops multiples
+      let file = data.files[0];
+
+      // So, there is a situation, where the user drops something from another browser tab, which is not really a file
+      // upload, so it won't exist in the FileList. If that is the case, we have to create a new file from DataURI
+      // and then use it
+      if (!file) {
+        file = FileHandler.createFileFromDataURI(data.getData("text/plain"));
+      }
+
+      // Execute the image processing - this will call the Drop Zone when finished
+      new ImageProcessor(file);
     } catch (error: unknown) {
       // Immediately allow dropping another image as there was no processing left
       this.processorReenableDrop();
 
-      // Only throw "known" errors here, others will be handled by the global handler
+      // Only throw "known" errors here, others will be handled by the global handler, if any.
+      // This will throw a user-friendly error message and log the proper object in the console
       if (!(error instanceof ErrorMessage)) {
+        this.triggerErrorMessage(new ErrorMessage("unknownError").message);
+        console.log(error);
+
         return;
       }
 
-      // "Throw" the error inside the error container in the DOM
+      // "Throw" the custom error inside the error container in the DOM
       this.triggerErrorMessage(error.message);
     }
 
