@@ -141,12 +141,8 @@ export class DropZone {
   private processorStart(e: DragEvent): void {
     this.isCurrentlyProcessing = true;
 
-    const data = e.dataTransfer;
-
-    if (!data) {
-      // TODO: check if this is really needed
-      throw new Error(`Err`);
-    }
+    // This always seem to exist, so no need to later check for `if(!data) {}` 🤔
+    const data = e.dataTransfer as DataTransfer;
 
     try {
       // Only pick the first file in case the user drops multiples
