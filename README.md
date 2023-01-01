@@ -71,8 +71,14 @@ A small workaround has been implemented, that fills the image with a different c
 
 Unfortunately, again, this will create a very dark-blue border around the pixels which is not a big deal with the small emote size in the Twitch chat.
 
-- Unfortunately, on some **rare** occasion, there will be a one-frame solid background, which can't be helped
+- Unfortunately, on some **rare** occasion, there will be a one-frame solid background, which can't be helped, although, it sometimes gets fixed when retried with the same image
 
 - If the input image uses transparency, **it has to be cleared from any imperfections**, no almost-transparent-pixels or the resulting image will have visible artifacts:
 
 ![img](https://user-images.githubusercontent.com/7021295/210152126-b36096df-5230-4d88-8058-78059d537c4f.png)
+
+---
+
+Stuff:
+
+![1](https://user-images.githubusercontent.com/7021295/210184713-4025f262-e789-4e30-9e7c-6007000311cf.gif) ![2](https://user-images.githubusercontent.com/7021295/210184714-9f61414d-04d3-4bb2-b461-89b719bb6884.gif) ![3](https://user-images.githubusercontent.com/7021295/210184715-0b9bee60-9b08-47e5-9a7f-b54897dc0f14.gif) ![4](https://user-images.githubusercontent.com/7021295/210184716-5bc1b10a-1431-44f0-8d7d-3ca77deec2dc.gif) ![5](https://user-images.githubusercontent.com/7021295/210184717-f9642913-c261-41c1-a413-82ecb5cd4d0c.gif) ![6](https://user-images.githubusercontent.com/7021295/210184719-bf32830c-3884-4714-82cc-390f12b29798.gif)
