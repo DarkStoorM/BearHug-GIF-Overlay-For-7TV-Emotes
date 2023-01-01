@@ -5,6 +5,7 @@
   "scripts": {
     "coverage-ff": "start firefox \"%cd%\\coverage\\index.html\"",
     "coverage-chrome": "start chrome \"%cd%\\coverage\\index.html\"",
+    "postinstall": "npm run src:build",
     "start": "npx open-cli \"app/index.html\"",
     "src:build": "webpack",
     "src:build:w": "webpack -w",
