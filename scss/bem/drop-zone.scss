@@ -1,31 +1,28 @@
 .drop-zone {
-  align-items: center;
-  display: flex;
+  display: none;
   font-size: xx-large;
-  height: 100%;
-  justify-content: center;
   left: 0;
-  position: absolute;
-  text-transform: uppercase;
   top: 0;
-  width: 100%;
+  position: fixed;
+  text-transform: uppercase;
+
+  @include full-page-size();
+  @include vertically-aligned-text();
 
   /**
    * Indicates a state, where the user is dragging something over the drop zone
    */
   &--ready-for-processing {
-    @include background-dim();
+    display: block;
 
-    &::before {
-      content: 'MAKE A NEW BEAR HUG';
-    }
+    @include background-dim();
+    @include before-content('MAKE A NEW BEAR HUG');
   }
 
   &--working {
-    @include background-dim();
+    display: block;
 
-    &::before {
-      content: 'WORKING';
-    }
+    @include background-dim();
+    @include before-content('WORKING');
   }
 }

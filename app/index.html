@@ -10,12 +10,24 @@
 </head>
 
 <body>
-  <div id="container" class="main-container">
-    <div id="drop-zone" class="drop-zone"></div>
-    <div class="main-container__content">
-      <div>
-        <img id="result-image" class="result-image" src="TODO" />
+  <div id="drop-zone" class="drop-zone"></div>
+  <div id="container" class="main">
+    <div class="main__container">
+      <div class="main__container__content">
+        <div class="main__container__content__result">
+          <img id="result-image"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAZlBMVEUiGg/cOVjTr4aQLToqGxKmMELANE3RrITNqoKBak/TOFWJKzfBoHp6ZEtrV0BhTzo9MSIvJBfYOFbJNlF9aEy5M0p1YEeaLj5FIB04HRcxHBV6KTFxJy5oJSquMUdRIiFPIiA/HxueUYX7AAABLklEQVR42u3YyU7DMBRG4UsamsEdA21pSxne/yVBMeFH8iYL61qi51tmdZQ4ia8NAAAAAAAAAP6BxcNf/SG81+ZIAdKHizlSgPQ386CA1KI2BwpIBfOggH4Z9VPA8GoOFPBYW3QOQyxYns2FAiYvS9eHoAAVPI2XDhfzoAC5xlXwYRntN93zZj8z4DPegpzLsGuqb003L6B+i98Cy2bdVKNmPSvATuO1k+WyW1U/Vrs5AbqWybadAtptkYBj9et4n3eg+BpI3gKvAOna8QF0ViZAX8IyAUIAAQQQQMDMgFpbMgcOm1LJsC13+BtqMCk0F2g0KzIXaDi9mvdckI7njrvi9IDiZuIwFySCmd8dSA3BJO8aKHNMp7egzEGl5oJCR7X6EgIAAAAAAAAAsvsCWnMQB/1T334AAAAASUVORK5CYII=" />
+        </div>
+        <div class="main__container__content__description">
+          <h2>BearHug image overlay</h2>
+          <h4>Create a new gif for 7TV with a BearHug overlay</h4>
+          <p>Drop an image anywhere and the app will do the rest. For more information refer to the <a
+              href="https://github.com/DarkStoorM/BearHug-GIF-Overlay-For-7TV-Emotes#readme">README</a>. This app is
+            <b>client-side</b>.</p>
+          <p>Save your new GIFs as no images are being uploaded to any server.</p>
+        </div>
       </div>
+      <div id="errors-container" class="main__container__errors"></div>
     </div>
   </div>
   <script src="app.js" defer></script>

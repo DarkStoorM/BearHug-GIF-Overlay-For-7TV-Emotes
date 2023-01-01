@@ -7,14 +7,38 @@
 html {
   line-height: 16pt;
   -webkit-text-size-adjust: 16pt;
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
 }
 
 body {
-  align-items: center;
-  background-color: #3b3939;
-  color: #908585;
+  background-color: #181d1f;
+  color: #dbdbdb;
   display: flex;
   justify-content: center;
   margin: 5rem 0 0 0;
+  padding: 0 1rem 0 1rem;
+}
+
+// Top margins are ugly :(
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-top: 0;
+}
+
+a {
+  &:active,
+  &:link,
+  &:hover,
+  &:visited {
+    color: #dc3939;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  &:hover {
+    color: #ec6767;
+  }
 }

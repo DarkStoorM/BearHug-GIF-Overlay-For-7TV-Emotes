@@ -1,6 +1,7 @@
 import GIF = require("gif.js");
 import { dropZone } from "./app";
-import { spritesheetData } from "./helpers";
+import { ErrorMessage } from "./helpers/error-messages";
+import { spritesheetData } from "./helpers/spritesheet";
 import { Numbers } from "./utils/Numbers";
 import { workerString } from "./worker";
 
@@ -33,7 +34,7 @@ export class ImageProcessor {
 
   public constructor(private droppedFile: File) {
     if (!this.isImage()) {
-      throw new Error(`Selected file type is not supported`);
+      throw new ErrorMessage("unsupportedType");
     }
 
     // Register the reader event immediately
@@ -123,10 +124,7 @@ export class ImageProcessor {
 
         // Choose the offset for the dropped image (0,4 indices only). This is required to make
         // the image move along with the bear
-        const offset =
-          x >= 9
-            ? this.droppedImageOffsets[Numbers.clamp(x - 8, 0, 4)]
-            : this.droppedImageOffsets[0];
+        const offset = x >= 9 ? this.droppedImageOffsets[Numbers.clamp(x - 8, 0, 4)] : this.droppedImageOffsets[0];
 
         // First, draw the dropped image
         context.drawImage(image, offset[0], offset[1], 128, 128);
