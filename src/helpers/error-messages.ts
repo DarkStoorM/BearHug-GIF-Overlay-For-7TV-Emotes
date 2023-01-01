@@ -12,5 +12,5 @@ export class ErrorMessage extends Error {
 const ErrorMessages = {
   unsupportedType: "Only GIF, PNG, JPEG, and WEBP file types are supported.",
   unknownError:
-    "An unexpected error has occurred. You most likely used the recently generated image, which sometimes will get rejected by the browser or something is just incompatible with your device :(.\n\nThis has also been reported to the console in case you want to report it, idk.",
+    "Selected file is invalid. Drop a local file or drag it from another tab. If you believe this is an error, open a new Issue in the repo.",
 };
