@@ -9,7 +9,8 @@ export class DropZone {
   private errorsContainer: HTMLDivElement;
   /**
    * Initial drop zone, which will trigger the page overlay. This part is required as the overlay
-   * is initially disabled and dragging over the body will trigger the
+   * is initially disabled and dragging over the body will trigger the first overlay display, and then the drag event
+   * is handled by toe drop zone (enter/over/leave)
    */
   private htmlBody: HTMLHtmlElement;
   /**
