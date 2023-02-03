@@ -129,7 +129,7 @@ export class ImageProcessor {
         // First, draw the dropped image
         context.drawImage(image, offset[0], offset[1], 128, 128);
 
-        // Choose which frame to draw, but only the the current frame count is 7
+        // Choose which frame to draw, but only if the current frame count is 7
         const overlayX = x >= 7 ? x - 7 : 0;
 
         // Now draw the overlay on top of it
